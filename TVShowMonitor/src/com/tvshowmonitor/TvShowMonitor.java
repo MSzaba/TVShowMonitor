@@ -37,9 +37,14 @@ public class TvShowMonitor {
 		
 	}
 
-	private static String whenItWillBeplayed(URL filmURL) {
-		// TODO Auto-generated method stub
-		return null;
+	private static String whenItWillBeplayed(URL filmURL) throws Exception {
+		
+		String hostname = filmURL.getHost();
+		URLProcessor processor = URLProcessorFaxtory.getProcessorByHomepage(hostname);
+		if (processor == null) {
+			throw new Exception("Hostname " + hostname + " is a unknown");
+		}
+		return processor.getPlayTimes(filmURL);
 	}
 
 	private static List<URL> getURLList(File file) throws IOException {
@@ -64,7 +69,7 @@ public class TvShowMonitor {
 			//process the exceptions in the main function
 		    throw x;
 		}
-		return null;
+		return urlList;
 	}
 
 	private static File openFile(String fileName) throws Exception {
@@ -80,11 +85,23 @@ public class TvShowMonitor {
 
 	private static String getFileNameFromParameter(String[] args) throws Exception {
 		if (args == null || args.length == 0) {
-			throw new Exception("Missing input parameter");
+			printHelp();
+			System.exit(0);
 		}
 		String fileName = args[0];
 		
 		return fileName;
+	}
+
+	private static void printHelp() {
+		System.out.println("Tv Show monitor 1.0");
+		System.out.println("--------------------");
+		System.out.println("Usage: call the app with a file as parameter where links of the different TV programs are listed.");
+		System.out.println("Lines started with " + COMMENT + " count as comment");
+		System.out.println();
+		System.out.println("Supported platforms:");
+		System.out.println("-port.hu");
+		
 	}
 
 }
