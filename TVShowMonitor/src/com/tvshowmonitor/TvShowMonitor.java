@@ -11,7 +11,6 @@ import java.util.List;
 
 public class TvShowMonitor {
 	
-	private static final int STOPPED_DUE_INVALID_INPUT_PARAMETERS = -1;
 	private static final String COMMENT = "#";
 
 	public static void main(String[] args) {
@@ -32,7 +31,7 @@ public class TvShowMonitor {
 			System.out.println("Bye");
 		} catch (Exception e) {
 			System.out.println("Error occcurred during processing: "  + e.getMessage());
-			System.exit(STOPPED_DUE_INVALID_INPUT_PARAMETERS);
+			System.exit(-1);
 		}
 		
 	}

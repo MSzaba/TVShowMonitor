@@ -10,9 +10,24 @@ public abstract class URLProcessor {
 	
 	private static final String UTF8 = "UTF-8";
 
-	abstract String getPlayTimes(URL filmURL) throws IOException;
+	//abstract String getPlayTimes(URL filmURL) throws IOException;
 	
-	protected String getPageContent(URL filmURL) throws IOException {
+	abstract String getPlaytimes(String body, String nameOfTheFilm);
+	
+	abstract String getNameOfTheFilm(String body);
+	
+	
+	public String getPlayTimes(URL filmURL) throws IOException {
+		String body = getPageContent(filmURL);
+		String nameOfTheFilm = getNameOfTheFilm(body);
+		if (nameOfTheFilm == null) {
+			return "Unable to find film name for " + filmURL;
+		}
+		String playtimesOfTheFilm = getPlaytimes(body, nameOfTheFilm);
+		return ">> " + nameOfTheFilm + ": " + playtimesOfTheFilm;
+	}
+	
+	private String getPageContent(URL filmURL) throws IOException {
 		URLConnection conn = filmURL.openConnection();
 		InputStream in = conn.getInputStream();
 		String encoding = conn.getContentEncoding();
