@@ -31,6 +31,7 @@ public class TvShowMonitor {
 			System.out.println("Bye");
 		} catch (Exception e) {
 			System.out.println("Error occcurred during processing: "  + e.getMessage());
+			System.out.println(e.getStackTrace());
 			System.exit(-1);
 		}
 		
@@ -51,8 +52,8 @@ public class TvShowMonitor {
 		try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
 		    String line = null;
 		    while ((line = reader.readLine()) != null) {
-		        if (line.startsWith(COMMENT)) {
-		        	//no need to process comment lines
+		        if (line.startsWith(COMMENT) || line.trim().length() == 0) {
+		        	//no need to process comment and empty lines
 					continue;
 				}
 		        URL url = null;
